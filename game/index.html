@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VELMARA HEAT — an open-world crime game</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #0b0f16; font-family: 'Segoe UI', system-ui, sans-serif; color: #f2f2f2; }
+  #game { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; }
+  .panel { position: fixed; background: rgba(10, 14, 22, 0.72); border: 1px solid rgba(255, 46, 136, 0.35); border-radius: 10px; padding: 10px 14px; backdrop-filter: blur(2px); }
+  #hud-stats { top: 14px; left: 14px; line-height: 1.5; font-size: 15px; }
+  #hud-stats b { color: #ff2e88; }
+  #hud-wanted { color: #ffd23f; font-size: 22px; letter-spacing: 2px; }
+  #hud-health { width: 150px; height: 10px; background: #222; border-radius: 5px; margin-top: 6px; overflow: hidden; }
+  #hud-health-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #37b268, #7ee081); }
+  #minimap { position: fixed; top: 14px; right: 14px; width: 180px; height: 180px; border: 2px solid rgba(255, 46, 136, 0.5); border-radius: 10px; background: #10151d; }
+  #hud-mission { top: 14px; left: 50%; transform: translateX(-50%); max-width: 560px; text-align: center; font-size: 14px; }
+  #hud-speed { bottom: 16px; right: 18px; font-size: 22px; font-weight: 700; }
+  #hud-prompt { bottom: 16px; left: 50%; transform: translateX(-50%); font-size: 15px; color: #ffe9a8; }
+  #hud-toast { bottom: 64px; left: 50%; transform: translateX(-50%); font-size: 15px; color: #fff; max-width: 640px; text-align: center; }
+  .overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; background: rgba(5, 8, 14, 0.82); z-index: 10; text-align: center; padding: 24px; }
+  .overlay h1 { font-size: 54px; margin: 0 0 8px; color: #ff2e88; letter-spacing: 4px; text-shadow: 0 0 24px rgba(255, 46, 136, 0.6); }
+  .overlay h2 { font-size: 20px; font-weight: 400; color: #9fd8e8; margin: 0 0 18px; }
+  .overlay p { max-width: 620px; line-height: 1.6; color: #d7dde6; }
+  .overlay button { margin-top: 22px; font-size: 20px; padding: 12px 34px; border: none; border-radius: 10px; background: #ff2e88; color: #fff; cursor: pointer; }
+  .overlay button:hover { background: #ff4d9c; }
+  .controls { font-size: 14px; color: #b9c2cf; line-height: 1.9; }
+  .controls b { color: #fff; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud-stats" class="panel">
+  <div><b>$</b> <span id="hud-cash">$250</span> &nbsp;·&nbsp; <span id="hud-listeners">120 listeners</span></div>
+  <div id="hud-wanted">☆☆☆☆☆</div>
+  <div id="hud-health"><div id="hud-health-fill"></div></div>
+  <div><span id="hud-clock">21:40</span> &nbsp;·&nbsp; <span id="hud-station">WAVE 98 · PIRATE TALK</span></div>
+</div>
+<canvas id="minimap" width="180" height="180"></canvas>
+<div id="hud-mission" class="panel">Drive to the WAVE 98 studio to start Act I.</div>
+<div id="hud-speed" class="panel">ON FOOT</div>
+<div id="hud-prompt" class="panel"></div>
+<div id="hud-toast" class="panel"></div>
+
+<div id="start-screen" class="overlay">
+  <h1>VELMARA HEAT</h1>
+  <h2>Velmara Bay · WAVE 98 is live</h2>
+  <p>You are Rio "Wavelength" Vega — getaway driver by night, pirate-radio DJ
+  by day. Your broadcast's listener count is a second currency: drive well,
+  drift hard, finish missions on air, and the whole city tunes in. Eight
+  missions, three acts, wanted level 0–5, police chases, a helicopter above
+  wanted 3, three radio stations and three shops. The city is yours.</p>
+  <p class="controls"><b>W A S D</b> walk / drive &nbsp;·&nbsp; <b>Shift</b> sprint / handbrake &nbsp;·&nbsp; <b>E</b> enter car / buy &nbsp;·&nbsp; <b>F</b> repair at a shop ($150) &nbsp;·&nbsp; <b>R</b> radio &nbsp;·&nbsp; <b>Click</b> fire pistol &nbsp;·&nbsp; <b>M</b> mute &nbsp;·&nbsp; <b>P</b> pause</p>
+  <button id="start-button">START THE BROADCAST</button>
+</div>
+
+<div id="pause-screen" class="overlay">
+  <h1>PAUSED</h1>
+  <h2>VELMARA HEAT waits for no one — except now.</h2>
+  <p>Press P or Esc to keep driving.</p>
+</div>
+
+<div id="over-screen" class="overlay">
+  <h1 id="over-title">BUSTED</h1>
+  <h2 id="over-sub">The Velmara PD caught up with Rio.</h2>
+  <button id="again-button">PLAY AGAIN</button>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
